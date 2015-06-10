@@ -1,0 +1,27 @@
+<Electron>:
+    size: 50, 50
+    canvas:
+        Ellipse:
+            pos: self.pos
+            size: self.size
+<RaceGame>:
+    ball: race_electron
+    canvas:
+        Rectangle:
+            pos: self.center_x, 0
+            size: 1, self.height
+
+    Label:
+        font_size: 50
+        center_x: root.width/2
+        top: root.top - 50
+        text: "Dystans: " + str(root.ball.score)
+
+    Label:
+        font_size: 20
+        center_x: root.width * 4/5
+        top: root.top
+        text: "Rekord: " + str(root.ball.record)
+
+    Electron:
+        id: race_electron

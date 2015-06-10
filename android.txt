@@ -1,0 +1,3 @@
+title=Electron Race
+author=Marcin Migda
+orientation=portrait
