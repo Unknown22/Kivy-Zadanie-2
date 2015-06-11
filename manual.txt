@@ -1,0 +1,12 @@
+Electron Race
+
+1. Sterowanie
+2. Cel gry
+
+#1
+Elektronem sterujemy naciskaj¹c na ekran. W zale¿noœci od tego, po której stronie naciœniemy ekran, elektron przesunie siê w prawo lub w lewo.
+
+#2
+Celem gry jest przelecienie elektronem jak najwiêkszej odleg³oœci.
+Elektron z czasem przyspiesza jak w synchrotronie.
+Naszym celem jest równie¿ unikanie magnesów, które zagradzaj¹ nam drogê.
