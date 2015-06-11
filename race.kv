@@ -1,3 +1,9 @@
+<Magnes>:
+    canvas:
+        Rectangle:
+            pos: self.pos
+            size: self.width, self.height
+
 <Electron>:
     size: 50, 50
     canvas:
@@ -5,6 +11,10 @@
             pos: self.pos
             size: self.size
 <RaceGame>:
+    magnes1: przeszkoda1
+    magnes2: przeszkoda2
+    magnes3: przeszkoda3
+
     ball: race_electron
     canvas:
         Rectangle:
@@ -25,3 +35,15 @@
 
     Electron:
         id: race_electron
+
+    Magnes:
+        id: przeszkoda1
+        x: -100
+
+    Magnes:
+        id: przeszkoda2
+        x: -100
+
+    Magnes:
+        id: przeszkoda3
+        x: -100
