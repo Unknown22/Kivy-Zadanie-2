@@ -62,7 +62,7 @@ class RaceGame(Widget):
     prog_przyspieszenia = NumericProperty(500)
 
     def update(self, dt):
-        if self.ball.score > self.prog_przyspieszenia + 1000 * self.poziom_przyspieszenia and self.poziom_przyspieszenia < 15:
+        if self.ball.score > self.prog_przyspieszenia + 1000 * self.poziom_przyspieszenia and self.poziom_przyspieszenia < 18:
             self.prog_przyspieszenia += 2000 * self.poziom_przyspieszenia
             self.magnes1.przyspiesz()
             self.magnes2.przyspiesz()
