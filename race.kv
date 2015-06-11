@@ -1,15 +1,27 @@
 <Magnes>:
-    canvas:
-        Rectangle:
-            pos: self.pos
-            size: self.width, self.height
+    magnet_image: image_magnes
+    #canvas:
+        #Rectangle:
+            #pos: self.pos
+            #size: self.width, self.height
+    Image:
+        id: image_magnes
+        source: "images/magnet.png"
+        size: root.width, root.height
+        pos: root.pos
 
 <Electron>:
+    electron_image: image
     size: 50, 50
-    canvas:
-        Ellipse:
-            pos: self.pos
-            size: self.size
+    Image:
+        id: image
+        source: "images/electron2.png"
+        size: root.size
+        pos: root.pos
+    #canvas:
+       # Ellipse:
+            #pos: self.pos
+            #size: self.size
 <RaceGame>:
     magnes1: przeszkoda1
     magnes2: przeszkoda2

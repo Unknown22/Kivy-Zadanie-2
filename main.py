@@ -5,6 +5,7 @@ from kivy.properties import NumericProperty, ReferenceListProperty,\
 from kivy.vector import Vector
 from kivy.clock import Clock
 import random
+from kivy.uix.image import Image
 
 class Magnes(Widget):
     narysowany = NumericProperty(0)
@@ -14,6 +15,7 @@ class Magnes(Widget):
     pozycja_x = NumericProperty(0)
     pozycja_y = NumericProperty(0)
     pozycja = ReferenceListProperty(pozycja_x, pozycja_y)
+    magnet_image = ObjectProperty(Image())
 
     def przyspiesz(self):
         self.velocity_y -= 1
@@ -43,6 +45,7 @@ class Magnes(Widget):
 class Electron(Widget):
     score = NumericProperty(0)
     record = NumericProperty(0)
+    electron_image = ObjectProperty(Image())
 
 class RaceGame(Widget):
     ball = ObjectProperty(None)
@@ -56,27 +59,18 @@ class RaceGame(Widget):
     przyspieszenie_kulki = NumericProperty(5)
     przyrost_odleglosci = NumericProperty(1)
     poziom_przyspieszenia = NumericProperty(0)
+    prog_przyspieszenia = NumericProperty(500)
 
     def update(self, dt):
+        if self.ball.score > self.prog_przyspieszenia + 1000 * self.poziom_przyspieszenia and self.poziom_przyspieszenia < 15:
+            self.prog_przyspieszenia += 2000 * self.poziom_przyspieszenia
+            self.magnes1.przyspiesz()
+            self.magnes2.przyspiesz()
+            self.magnes3.przyspiesz()
+            self.poziom_przyspieszenia += 1
+            self.przyrost_odleglosci += self.poziom_przyspieszenia
+            self.przyspieszenie_kulki += 1
 
-        if self.ball.score > 500 and self.poziom_przyspieszenia == 0:
-            self.magnes1.przyspiesz()
-            self.magnes2.przyspiesz()
-            self.magnes3.przyspiesz()
-            self.poziom_przyspieszenia = 1
-            self.przyrost_odleglosci += 1
-        if self.ball.score > 1500 and self.poziom_przyspieszenia == 1:
-            self.magnes1.przyspiesz()
-            self.magnes2.przyspiesz()
-            self.magnes3.przyspiesz()
-            self.poziom_przyspieszenia = 2
-            self.przyrost_odleglosci += 1
-        if self.ball.score > 4500 and self.poziom_przyspieszenia == 2:
-            self.magnes1.przyspiesz()
-            self.magnes2.przyspiesz()
-            self.magnes3.przyspiesz()
-            self.poziom_przyspieszenia = 3
-            self.przyrost_odleglosci += 1
 
         Magnes.move_obstacle(self.magnes1, self)
         if self.magnes1.pozycja_y + self.magnes1.height / 2 < self.height * 2/3 or self.first_draw_magnes2 == 1:
@@ -89,27 +83,7 @@ class RaceGame(Widget):
         """
         Czyszczenie ekranu po kolizji
         """
-        if Magnes.zderzenie(self.magnes1, self.ball, self):
-            if self.ball.score > self.ball.record:
-                self.ball.record = self.ball.score
-            self.first_draw = 0
-            self.first_draw_magnes2 = 0
-            self.first_draw_magnes3 = 0
-            Magnes.wyczysc(self.magnes2, self)
-            Magnes.wyczysc(self.magnes3, self)
-            self.przyrost_odleglosci = 1
-            self.poziom_przyspieszenia = 0
-        if Magnes.zderzenie(self.magnes2, self.ball, self):
-            if self.ball.score > self.ball.record:
-                self.ball.record = self.ball.score
-            self.first_draw = 0
-            self.first_draw_magnes2 = 0
-            self.first_draw_magnes3 = 0
-            Magnes.wyczysc(self.magnes1, self)
-            Magnes.wyczysc(self.magnes3, self)
-            self.przyrost_odleglosci = 1
-            self.poziom_przyspieszenia = 0
-        if Magnes.zderzenie(self.magnes3, self.ball, self):
+        if Magnes.zderzenie(self.magnes1, self.ball, self) or Magnes.zderzenie(self.magnes2, self.ball, self) or Magnes.zderzenie(self.magnes3, self.ball, self):
             if self.ball.score > self.ball.record:
                 self.ball.record = self.ball.score
             self.first_draw = 0
@@ -117,6 +91,7 @@ class RaceGame(Widget):
             self.first_draw_magnes3 = 0
             Magnes.wyczysc(self.magnes1, self)
             Magnes.wyczysc(self.magnes2, self)
+            Magnes.wyczysc(self.magnes3, self)
             self.przyrost_odleglosci = 1
             self.poziom_przyspieszenia = 0
 
@@ -127,9 +102,15 @@ class RaceGame(Widget):
         self.ball.center_y = self.center_y * 1/10
         self.ball.score += self.przyrost_odleglosci
         if self.move == 1 and self.ball.center_x > self.width - self.width + 25:
-            self.ball.center_x -= self.przyspieszenie_kulki
+            if self.ball.center_x - self.przyspieszenie_kulki < self.width - self.width + 25:
+                self.ball.center_x = self.width - self.width + 25
+            else:
+                self.ball.center_x -= self.przyspieszenie_kulki
         elif self.move == 2 and self.ball.center_x < self.width - 25:
-            self.ball.center_x += self.przyspieszenie_kulki
+            if self.ball.center_x + self.przyspieszenie_kulki > self.width - 25:
+                self.ball.center_x = self.width - 25
+            else:
+                self.ball.center_x += self.przyspieszenie_kulki
         pass
 
     """
