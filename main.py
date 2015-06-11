@@ -9,7 +9,7 @@ import random
 class Magnes(Widget):
     narysowany = NumericProperty(0)
     velocity_x = NumericProperty(0)
-    velocity_y = NumericProperty(-3)
+    velocity_y = NumericProperty(-5)
     velocity = ReferenceListProperty(velocity_x, velocity_y)
     pozycja_x = NumericProperty(0)
     pozycja_y = NumericProperty(0)
@@ -17,7 +17,7 @@ class Magnes(Widget):
     def move_obstacle(self, race):
         if self.narysowany == 0:
             self.pos = (random.randrange(race.width), race.height)
-            self.size = (race.width * 3/10, race.height * 2/10)
+            self.size = (race.width * 4/10, race.height * 1/10)
             self.narysowany = 1
         self.pos = Vector(*self.velocity) + self.pos
         self.pozycja = self.pos
