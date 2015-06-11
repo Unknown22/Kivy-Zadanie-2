@@ -15,11 +15,14 @@ class RaceGame(Widget):
     ball = ObjectProperty(None)
     magnes = ObjectProperty(None)
     move = NumericProperty(0)
+    first_draw = NumericProperty(0)
 
 
     def update(self, dt):
-        #self.ball.center_x = self.center_x
-        self.ball.center_y = self.center_y * 2/10
+        if self.first_draw == 0:
+            self.ball.center_x = self.center_x
+            self.first_draw = 1
+        self.ball.center_y = self.center_y * 1/10
         self.ball.score += 1
         if self.move == 1 and self.ball.center_x > self.width - self.width + 25:
             self.ball.center_x -= 5
